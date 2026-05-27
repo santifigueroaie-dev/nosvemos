@@ -1,0 +1,375 @@
+NOS VEMOS TRAVEL ATELIER - CONTINUATION NOTES
+Last updated: 2026-05-16
+
+PROJECT LOCATION
+C:\Users\kiana\Desktop\sant\nos vemos claude
+
+PROJECT OVERVIEW
+Nos Vemos Travel Atelier is a premium Spanish-language travel atelier website.
+The brand direction is:
+- Elegant
+- Editorial
+- Cinematic
+- Luxurious but warm
+- Sophisticated without looking corporate
+- High-end yet human
+- Minimal but visually rich
+
+The website should feel like a boutique luxury travel magazine combined with a modern premium concierge service.
+
+TECH STACK
+- React
+- Vite
+- TypeScript
+- Tailwind CSS
+- React Router
+- lucide-react icons
+- framer-motion animations
+
+IMPORTANT TERMINAL COMMANDS
+From:
+C:\Users\kiana\Desktop\sant\nos vemos claude
+
+Run dev server:
+npm run dev
+
+Open:
+http://localhost:5173/
+
+Validate before finishing future work:
+.\node_modules\.bin\tsc.cmd --noEmit
+.\node_modules\.bin\vite.cmd build
+
+If npm is not recognized in a Codex shell, direct node_modules bin commands may still work.
+
+GLOBAL DESIGN SYSTEM
+Typography:
+- Poppins is loaded in index.html from Google Fonts.
+- All UI typography should use Poppins.
+- Headlines should be bold and editorial.
+
+Palette:
+- Warm ivory backgrounds
+- Dark navy cards / panels
+- Muted gold accents
+- Warm gray text
+- Soft borders
+- Elegant shadows
+
+Avoid:
+- Generic SaaS UI
+- Excessive gradients
+- Overly rounded cards
+- Cheap shadows
+- Crowded layouts
+- Flat sections
+
+GLOBAL ROUTES
+/
+Home page.
+
+/destinos
+Destination listing page with search, filters, sorting, budget slider and destination cards.
+
+/destinos/:id
+Destination detail page.
+Current ids:
+- honduras
+- turquia
+- costa-rica
+- malta
+
+/experiencias
+Placeholder company/traveler experience page. This will be developed later.
+
+NAVIGATION REQUIREMENTS ALREADY IMPLEMENTED
+- "Inicio" goes to /
+- "Destinos" goes to /destinos
+- "Experiencias" goes to /experiencias
+- "Contacto" goes to /#propuesta
+- Top right "Diseña tu viaje" goes to /destinos
+- Hash scrolling is handled by src/components/ScrollToHash.tsx
+
+HOME PAGE
+File:
+src/pages/Home.tsx
+
+Home includes:
+- Cinematic hero
+- Philosophy section
+- Service pillars:
+  - Guías locales
+  - Hoteles con intención
+  - Logística invisible
+- Featured destinations preview
+- Contact/proposal form at #propuesta
+
+The old static "Asistente de viaje" button was removed from Home.
+The assistant is now global.
+
+FLOATING TRAVEL ASSISTANT
+File:
+src/components/FloatingTravelAssistant.tsx
+
+This is a fake/simple AI assistant.
+It opens an interactive chat panel and gives keyword-based responses about:
+- Honduras
+- Costa Rica
+- Turquía
+- Malta
+- Prices / budget
+- WhatsApp / proposal
+
+It includes a WhatsApp CTA link:
+https://wa.me/13051234567?text=Hola%20Nos%20Vemos%2C%20quiero%20dise%C3%B1ar%20una%20propuesta%20de%20viaje%20personalizada.
+
+This is currently a fake usable link and should be replaced later with the real WhatsApp number/message.
+
+DESTINATION DATA
+File:
+src/data/destinations.ts
+
+Contains core destination data used by listing and detail pages.
+Current destinations:
+- Honduras Explorer
+- Turquía Atemporal
+- Costa Rica Pura Vida
+- Malta Caballeresca
+
+Some older files previously had mojibake encoding issues. Most active components have been cleaned, but if weird text like Ã or Â appears, fix it immediately.
+
+DESTINATION DETAIL PAGE
+File:
+src/pages/DestinationDetail.tsx
+
+Current structure:
+1. Full hero
+2. Trust row
+3. DestinationPlannerSection
+4. DestinationProposalSection (DP)
+
+The old itinerary/investment section was deleted per user request.
+
+DESTINATION PLANNER SECTION
+File:
+src/components/DestinationPlannerSection.tsx
+
+Purpose:
+Allow users to activate/deactivate route stops and see a real-time estimate.
+
+Desktop layout:
+- Left: selectable destination/route cards
+- Right: sticky dark navy travel summary panel
+
+Mobile:
+- Cards stack first
+- Summary appears below
+
+Features:
+- Toggle destinations on/off
+- Dynamic selected list
+- Dynamic duration
+- Dynamic number of destinations
+- Dynamic per-person estimate
+- Dynamic total estimate
+- CTA: "Solicitar propuesta personalizada"
+- Disclaimer
+
+Important:
+This section is now destination-specific.
+
+Planner route stops:
+
+Honduras:
+- Roatán
+- Utila
+- Copán
+- Pico Bonito
+- La Ceiba & Tela
+
+Turquía:
+- Estambul
+- Capadocia
+- Éfeso
+- Pamukkale
+
+Costa Rica:
+- Monteverde
+- Arenal
+- Manuel Antonio
+- Tortuguero
+
+Malta:
+- La Valeta
+- Mdina
+- Gozo
+- Comino
+
+DestinationDetail passes destinationId:
+<DestinationPlannerSection destinationId={destination.id} />
+
+DESTINATION PROPOSAL SECTION / DP
+File:
+src/components/DestinationProposalSection.tsx
+
+Important naming:
+The user calls this section "DP".
+DP means "Destination Proposal".
+
+The DP section was first built for Honduras, then generalized to all destinations.
+
+DP structure:
+1. Cinematic hero with destination-specific title and image
+2. Trust row
+3. Dark "Conoce..." section
+4. Stats row
+5. Datos curiosos cards
+6. "Qué hace a este destino único" icon row
+7. "Experiencias que te esperan" gallery cards
+8. "Mejor época para viajar" section with gallery
+9. Dark safety/support section
+10. Final CTA section
+
+The visible text "DP · Destination proposal" was deleted from the page per user request.
+Do not reintroduce it visually.
+
+Large DP image sizing:
+Malta and Costa Rica images were too large.
+Fixed sizes now:
+- Season gallery: h-[360px] lg:h-[540px]
+- Final CTA image: h-80 md:h-[520px]
+Keep future images within this scale unless user asks otherwise.
+
+DP GALLERIES AND PUBLIC IMAGE FOLDERS
+All upload folders live in:
+public/destination
+
+Images should be uploaded as:
+01.jpg
+02.jpg
+03.jpg
+04.jpg
+
+The site will automatically try local files first and fall back to remote placeholder images if files are missing.
+
+Honduras folders:
+public/destination/honduras/historia-viva
+public/destination/honduras/paraisos-submarinos
+public/destination/honduras/playas-de-ensueno
+public/destination/honduras/naturaleza-exuberante
+public/destination/honduras/honduras-epoca
+
+Turquía folders:
+public/destination/turquia/estambul-privada
+public/destination/turquia/capadocia-en-globo
+public/destination/turquia/efeso-legado-clasico
+public/destination/turquia/rituales-otomanos
+public/destination/turquia/turquia-epoca
+
+Costa Rica folders:
+public/destination/costa-rica/bosque-nuboso
+public/destination/costa-rica/volcanes-activos
+public/destination/costa-rica/playas-del-pacifico
+public/destination/costa-rica/vida-silvestre
+public/destination/costa-rica/costa-rica-epoca
+
+Malta folders:
+public/destination/malta/la-valeta-privada
+public/destination/malta/mdina-al-atardecer
+public/destination/malta/gozo-y-comino
+public/destination/malta/naufragios-y-cuevas
+public/destination/malta/malta-epoca
+
+Each destination folder has or should have a README.md explaining upload names.
+
+EXPERIENCIAS PAGE
+File:
+src/pages/Experiencias.tsx
+
+This is a placeholder page created because the user requested:
+"Experiencias" should redirect to a new site/page which will talk about our experience as travellers around the world with information about us as a company. It will develop later.
+
+Future work:
+Develop this into a proper About/Experience page with:
+- company story
+- founder/traveler perspective
+- travel philosophy
+- global field notes
+- trust and human expertise
+
+FOOTER
+File:
+src/components/Footer.tsx
+
+Footer includes:
+- Premium brand block
+- CTA to design trip
+- Navigation links
+- Destination links
+- Contact email
+- Phone
+- Miami, FL
+- Instagram placeholder
+- Legal bottom bar
+
+KNOWN IMPORTANT USER REQUESTS ALREADY HANDLED
+- Moved website into C:\Users\kiana\Desktop\sant\nos vemos claude
+- Added missing index.html and app entry files
+- Built Home page
+- Made /destinos an internal route, not the entire site
+- Fixed blank localhost page
+- Removed Vite config that was crashing esbuild in this folder
+- Replaced unsupported lucide icons
+- Created /experiencias page
+- Created global floating assistant chat
+- Changed "Diseña tu viaje" nav button to /destinos
+- Changed Contacto link to bottom form
+- Removed old itinerary/investment section from destination detail
+- Applied planner to all destination pages
+- Applied DP to all destination pages
+- Created public upload folders for DP galleries
+- Fixed Malta/Costa Rica oversized DP images
+- Made planner destination-specific
+
+VALIDATION STATUS AT LAST CHECK
+The following passed:
+.\node_modules\.bin\tsc.cmd --noEmit
+.\node_modules\.bin\vite.cmd build
+
+IMPORTANT CODING NOTES FOR NEXT CHAT
+- Prefer editing with apply_patch.
+- Preserve existing routes.
+- Preserve Spanish copy with proper accents.
+- Watch for mojibake characters: Ã, Â, �.
+- Use Poppins.
+- Use lucide-react icons that exist in installed version.
+- If using a new lucide icon, verify export exists or choose a known icon.
+- Keep Tailwind opacity values standard, e.g. /10, /20, /30, /40, /50, /60, /70, /75, /80, /90.
+- Avoid arbitrary opacity values like /82, /86, /58 unless sure Tailwind generates them.
+- Avoid huge image heights. Use fixed responsive heights where necessary.
+- Keep cards rounded-lg or subtle radius. Do not make overly pill-shaped luxury cards unless appropriate.
+- Keep DP section premium and editorial.
+- If user uploads images, place them in public/destination/... folders and name them 01.jpg through 04.jpg.
+
+LIKELY NEXT TASKS
+1. Replace remote placeholder images with uploaded local images.
+2. Expand /experiencias into a real page.
+3. Improve mobile nav menu; current mobile menu button is visual only.
+4. Make contact form functional or connect to email/WhatsApp.
+5. Replace fake WhatsApp link with real business number.
+6. Improve assistant responses or connect to real backend later.
+7. Add destination-specific planner/gallery upload folders for future destinations.
+8. Add SEO metadata per route if needed.
+
+DO NOT BREAK
+- /destinos
+- /destinos/honduras
+- /destinos/turquia
+- /destinos/costa-rica
+- /destinos/malta
+- /experiencias
+- /#propuesta hash scrolling
+- Floating assistant
+- Destination-specific planner
+- DP galleries with public upload folders
+
